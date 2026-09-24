@@ -17,7 +17,7 @@ public class personaje  : MonoBehaviour
     }
 
     void Update()
-    {
+    { 
         if (isDead) return;
 
         // Detecta el espacio, clic izquierdo o toque en pantalla tactil
@@ -30,7 +30,7 @@ public class personaje  : MonoBehaviour
     void Jump()
     {
         // Resetea la velocidad en Y antes de impulsar para mantener el salto consistente.
-        // Si usas Unity 2023.1 o superior, usa "rb.linearVelocity".
+        
         // Para versiones anteriores, conserva "rb.velocity".
         rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
     }
