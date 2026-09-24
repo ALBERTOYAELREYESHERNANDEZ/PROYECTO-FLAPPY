@@ -1,5 +1,5 @@
 using UnityEngine;    //ESTA ES UNA LIBRERIA DE UNITY PARA LEER COMPONENTES DE LA ESCENA
-
+using TMPro; //Libreria para controlar textos de TextMeshPro
 public class GameManager : MonoBehaviour // ES UNA CLASE DE POO
 {
     //ESTA INSTANCIA PERMITE QUE PUEDA ACCEDER A LOS DEMAS CODIGOS
@@ -17,13 +17,66 @@ public class GameManager : MonoBehaviour // ES UNA CLASE DE POO
     //COMPROBACION PARA LA VARIBALE Y PODER ACCEDER DESDE OTROS SCRIPTS
     private bool IsGameOver => isGameOver;
 
-
-
-
-
-    // Update is called once per frame
-    void Update()
+     private void Awake()
     {
-        
+        //CONFIGURACION DE UN SINGLETON 
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
     }
+
+      private void Start()
+    {
+        //INICIALIZANDO LAS VARIABLES DEL ESTADO DEL JUEGO
+        score = 0;
+        isGameOver = false;
+
+        UpdateScoreText(); /*ES UNA FUNCION PARA ACTULIZAR EL
+        PUNTAJE */ 
+        //ESTA CONDICIONAL HACE QUE AL INCIAR EL JUEGO ESTE OCULTO 
+        if (gameOverPanel != null)
+        {
+            gameOverPanel.SetActive(false);
+        }
+    }
+
+
+    public void AddScore(int points = 1)
+    {
+        if (isGameOver) return;
+        score += points; //SUMA DE PUNTAJE Y ACTUALIZACION
+        UpdateScoreText();
+    }
+
+    public void GameOver() //PANTALLA DE GAME OVER 
+    {
+         if (isGameOver) return;
+         isGameOver = true;
+         if (gameOverPanel != null)
+         {
+            gameOverPanel.SetActive(true); //ACTIVA PANTALLA DE MUERTE
+         }
+    }
+     //STRING SON PARA LEER NUMEROS EN TEXTO EN UNTIY 
+     private void UpdateScoreText()
+     {
+        if (scoreText != null)
+        {
+            scoreText.text = score.ToString();
+        }
+     }
+
+
+
+
+
+
+
+
+    
 }
