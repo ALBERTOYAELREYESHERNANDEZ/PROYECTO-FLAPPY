@@ -2,8 +2,7 @@ using UnityEngine;
 
 public class generadorobstaculos : MonoBehaviour
 {
-    
-    [Header("CONFIGURACION DE PREFAB OSEA LAS TUBERIAS")]
+    [Header("CONFIGURACION DE PREFAB")]
     [SerializeField] private GameObject obstaculoPrefab;
 
     [Header("PARAMETROS DE TIEMPO")]
@@ -16,7 +15,7 @@ public class generadorobstaculos : MonoBehaviour
     private void Update()
     {
         // SI EL JUEGO TERMINO NO GENERAR MAS OBSTACULOS
-       // if (GameManager.Instance != null && GameManager.Instance.IsGameOver) return;
+        if (GameManager.Instance != null && GameManager.Instance.IsGameOver) return;
 
         if (timer < spawnRate)
         {
@@ -36,7 +35,7 @@ public class generadorobstaculos : MonoBehaviour
         float highestPoint = transform.position.y + heightOffset;
         float randomY = Random.Range(lowestPoint, highestPoint);
 
-        // INSTANCIAR EL PREFAB EN LA POSICION DEL GENERADOR CON LA ALTURA VARIADA QUE NO SE REPITA
+        // INSTANCIAR EL PREFAB EN LA POSICION DEL GENERADOR CON LA ALTURA VARIADA
         Instantiate(obstaculoPrefab, new Vector3(transform.position.x, randomY, 0), Quaternion.identity);
     }
 }

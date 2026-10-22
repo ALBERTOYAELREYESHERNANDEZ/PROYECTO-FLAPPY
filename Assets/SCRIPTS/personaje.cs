@@ -1,46 +1,60 @@
 using UnityEngine;
 
-public class personaje  : MonoBehaviour
+public class personaje : MonoBehaviour
 {
-    public static GameManager Instance { get; private set; }
+    [Header("CONFIGURACION DE VUELO")]
     [SerializeField] private float jumpForce = 5f;
+
+    [Header("REFERENCIAS")]
     [SerializeField] private Rigidbody2D rb;
-    // Estado del personaje
+
     private bool isDead = false;
 
     private void Awake()
     {
-        // Asigna el Rigidbody2D automaticamente si no se asigno en el Inspector
+        // SI NO SE ASIGNO EN EL INSPECTOR OBTENEMOS EL COMPONENTE AUTOMATICAMENTE
         if (rb == null)
         {
             rb = GetComponent<Rigidbody2D>();
         }
     }
 
-    void Update()
-    { 
-        if (isDead) return;
+    private void Update()
+    {
+        // SI EL PERSONAJE ESTA MUERTO O EL GAME MANAGER MARCA GAME OVER IGNORAR ENTRADA
+        if (isDead || (GameManager.Instance != null && GameManager.Instance.IsGameOver)) return;
 
-        // Detecta el espacio, clic izquierdo o toque en pantalla tactil
+        // DETECTAR BARRA ESPACIADORA O CLIC IZQUIERDO Y TOCAR PANTALLA
         if (Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButtonDown(0))
         {
             Jump();
         }
     }
 
-    void Jump()
+    private void Jump()
     {
-        // Resetea la velocidad en Y antes de impulsar para mantener el salto consistente.
-        
-        // Para versiones anteriores, conserva "rb.velocity".
-        rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
+        if (rb != null)
+        {
+            // APLICAR FUERZA DE SALTO EN EL EJE Y
+            rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
+        }
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (isDead) return; // Evita llamadas redundantes si ya murio
+        // EVITAR EJECUTAR LA LOGICA DE MUERTE MAS DE UNA VEZ
+        if (isDead) return;
 
         isDead = true;
-        Debug.Log("Game Over");
+
+        // COMUNICACION SEGURA CON EL SINGLETON GAMEMANAGER
+        if (GameManager.Instance != null)
+        {
+            GameManager.Instance.GameOver();
+        }
+        else
+        {
+            Debug.LogWarning("GAMEMANAGER INSTANCE NO FUE ENCONTRADO EN LA ESCENA");
+        }
     }
 }
