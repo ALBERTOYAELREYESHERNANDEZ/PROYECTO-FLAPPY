@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class personaje  : MonoBehaviour
 {
+    public static GameManager Instance { get; private set; }
     [SerializeField] private float jumpForce = 5f;
     [SerializeField] private Rigidbody2D rb;
     // Estado del personaje
