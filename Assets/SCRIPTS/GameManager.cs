@@ -1,5 +1,6 @@
 using UnityEngine;    //ESTA ES UNA LIBRERIA DE UNITY PARA LEER COMPONENTES DE LA ESCENA
 using TMPro;          //LIBRERIA NECESARIA PARA TRABAJAR CON TEXTMESHPRO
+using UnityEngine.SceneManagement; //LIBRERIA PARA HACER REINICIOS O CAMBIOS DE ESCENA DE JUEGO 
 
 public class GameManager : MonoBehaviour // ES UNA CLASE DE POO
 {
@@ -75,5 +76,17 @@ public class GameManager : MonoBehaviour // ES UNA CLASE DE POO
 
         //PAUSAR EL TIEMPO DEL JUEGO
         Time.timeScale = 0f;
+    }
+
+      //METODO PUBLICO PARA REINICIAR LA ESCENA UNA VEZ MUERA EL JUGADOR DESDE EL BOTON 
+    public void RestartGame()
+    {
+        //REINICIAR O RESTABLECEREL TIEMPO ANTES DE CARGAR LA ESCENA 
+        Time.timeScale = 1f;
+
+
+        //ESCENA LA ACTIVA ES LA QUE LE VAMOS A PASAR A UNITY 
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+
     }
 }

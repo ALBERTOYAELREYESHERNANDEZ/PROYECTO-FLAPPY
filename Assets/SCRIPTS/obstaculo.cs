@@ -4,7 +4,7 @@ public class obstaculo : MonoBehaviour
 {
     [Header("CONFIGURACION DE MOVIMIENTO")]
     [SerializeField] private float speed = 3f;
-    [SerializeField] private float resetPositionX = -10f; // POSICION X DONDE SE DESTRUYE O REINICIA
+    [SerializeField] private float resetPositionX = -50f; // POSICION X DONDE SE DESTRUYE O REINICIA
 
     private void Update()
     {
