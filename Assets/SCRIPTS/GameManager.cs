@@ -36,6 +36,8 @@ public class GameManager : MonoBehaviour // ES UNA CLASE DE POO
     private void Start()
     {
         //INICIALIZAR LA INTERFAZ DE USUARIO
+        Time.timeScale = 1f;
+
         UpdateScoreUI();
 
         if (gameOverPanel != null)
