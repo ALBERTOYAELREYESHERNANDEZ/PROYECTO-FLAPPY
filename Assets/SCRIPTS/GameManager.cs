@@ -65,20 +65,27 @@ public class GameManager : MonoBehaviour // ES UNA CLASE DE POO
     }
 
     //METODO QUE INVOCA EL PERSONAJE AL COLISIONAR
-    public void GameOver()
+    // METODO QUE INVOCA EL PERSONAJE AL COLISIONAR
+public void GameOver()
+{
+    if (isGameOver) return;
+
+    isGameOver = true;
+
+    // GUARDAR O VERIFICAR SI ENTRA EN EL TOP 5
+    if (ScoreManager.Instance != null)
     {
-        if (isGameOver) return;
-
-        isGameOver = true;
-
-        if (gameOverPanel != null)
-        {
-            gameOverPanel.SetActive(true);
-        }
-
-        //PAUSAR EL TIEMPO DEL JUEGO
-        Time.timeScale = 0f;
+        ScoreManager.Instance.CheckAndSaveScore(score);
     }
+
+    if (gameOverPanel != null)
+    {
+        gameOverPanel.SetActive(true);
+    }
+
+    // PAUSAR EL TIEMPO DEL JUEGO
+    Time.timeScale = 0f;
+}
 
       //METODO PUBLICO PARA REINICIAR LA ESCENA UNA VEZ MUERA EL JUGADOR DESDE EL BOTON 
     public void RestartGame()
